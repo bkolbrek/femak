@@ -1,0 +1,452 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="femak" />
+		<Option pch_mode="2" />
+		<Option compiler="gfortran" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin/Debug/femak" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gfortran" />
+				<Compiler>
+					<Add option="-g" />
+				</Compiler>
+			</Target>
+			<Target title="Release">
+				<Option output="bin/Release/femak" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="1" />
+				<Option compiler="gfortran" />
+				<Compiler>
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+		</Compiler>
+		<Unit filename="FEMAK.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/ASEULR.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/ASFG.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/ASGRAD.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/ASGRADC.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/ASIG.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/ASKG.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/ASKGC.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/ASLGC.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/ASMG.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/ASMGC.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/ASRC.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/ASRESD.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/ASSEL.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/ASSELC.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/B02.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/B03.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/B05.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/B08.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/B3D.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/BASEP.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/BAXI.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/BB08.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/BESSEL.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/BESSJ.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/BLCIMP.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/BLCOMT.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/BLCOND.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/BLCOOR.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/BLDLPN.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/BLDYNM.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/BLELEM.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/BLIMAG.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/BLLIND.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/BLLINM.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/BLNLIN.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/BLPREL.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/BLPRND.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/BLSOLC.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/BLSOLR.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/BLSRCE.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/BLTEMP.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/BLVALP.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/BTB08.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/BTDB.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/CALINWV.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/CALTYP50.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/COOR23D.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/D02.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/D05.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/D20.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/DLELM.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/DLELMC.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/DNIDX.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/DSP.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/ELEM01.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/ELEM02.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/ELEM03.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/ELEM04.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/ELEM05.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/ELEM08.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/ELEM09.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/ELEM11.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/ELEM20.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/ELEM91.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/ELEM92.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/ELEM93.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/ELEM94.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/ELEM95.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/ELEMLB.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/ESPACE.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/EULER.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/EXCIMP.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/EXCOND.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/EXCOOR.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/EXDLPN.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/EXDYNM.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/EXELEM.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/EXLINM.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/EXPREL.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/EXPRND.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/EXSOLC.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/EXSOLR.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/EXSRCE.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/EXTEMP.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/EXTF100.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/EXVALP.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/FNDELM.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/GAUSS.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/GJ04.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/GJ05.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/IMP100.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/INIT.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/INSTAN.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/INVERS.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/INVERSC.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/JACOB.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/JACOBI.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/KAGINT.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/KAGSRC.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/KAGVEL.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/LOCELD.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/MAJ.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/MODFG.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/MUIGIW.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/MUIGIW55.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/MULKU.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/MULTABC.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/NI.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/NI01.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/NI02.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/NI03.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/NI08.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/NORME.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/PNINV.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/PRDYNM.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/PRELEM.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/PRIMP.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/PRPVTS.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/PRRESD.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/PRSOL.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/PRSRCE.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/RDCIMP.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/RDELEM.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/RDEXTFLD.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/RDRDYNM.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/RDSRCE.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/SOL.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/SOLC.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/SRCTYP50.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/SRCTYP55.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/TRANSV.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/VIDE.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/WRCIMP.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/WRELEM.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/WRSRCE.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="FEMLIB2/XTRELM.FOR">
+			<Option weight="0" />
+		</Unit>
+		<Extensions>
+			<code_completion />
+			<envvars />
+			<debugger />
+			<lib_finder disable_auto="1" />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

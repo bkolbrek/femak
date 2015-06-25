@@ -1,0 +1,87 @@
+      SUBROUTINE BLVALP 
+C**********************************************************
+C     BLVALP.FOR
+C**********************************************************
+C     10/3 1992
+C     Kompaniet Numerisk Lyd
+C     Programmert etter Dhatt og Touzot s.435
+C     Ulf R. Kristiansen
+C**********************************************************
+C     TO COMPUTE EIGENVALUES AND EIGENVECTORS BY THE SUBSPACE
+C     ITERATION TECHNIQUE
+C============================================================
+      IMPLICIT REAL*8(A-H,O-Z)
+      include 'femak.cmn'
+      COMMON VA(1)
+c $DECLARE
+      REAL*4 TBL(20)
+
+      REAL*8 ZERO,X1,X2,X3
+      INTEGER I1,I2,I3,I4,I5
+      DATA TBL/4HKGS ,4HKGD ,4HMGS ,4HMGD ,4HFG  ,4HKE  ,4HFE  ,4HDLE ,
+     1  4HRES ,4HDLG ,4HP   ,4HLAMB,4HLAM1,4HR   ,4HPHI ,4HKSS ,4HMSS ,
+     1  4HV1  ,4HVX  ,4HV2  /,ZERO/0.D0/
+C-----------------------------------------------------------------------
+
+      READ(MR,1000)I1,I2,X1,X2,I3,I4,I5,X3
+1000  FORMAT(2I5,2F10.0,3I5,1F10.0)
+      IF(I1.NE.0) NVALP=I1
+      IF(I2.NE.0) NITER=I2
+      NSS=I3
+      IF(I4.NE.0) NMDIAG=I4
+      IF(I5.NE.0) NSWM=I5
+      IF(X1.NE.ZERO) EPSLB=X1
+      IF(X2.NE.ZERO) SHIFT=X2
+      IF(X3.NE.ZERO) TOLJAC=X3
+      IF(NSS.NE.0) GO TO 10
+      NSS=MIN0(NVALP+8,2*NVALP)
+      NSS=MIN0(NSS,NEQ)
+10    CONTINUE
+      WRITE(MP,2000) M,NVALP,NITER,NMDIAG,EPSLB,SHIFT,NSS,NSWM,TOLJAC
+2000  FORMAT(//' SUBSPACE ITERATION (M=',I2,')'/' ',26('=')/
+     1  15X,'NUMBER OF DESIRED EIGENVALUES            (NVALP)=',I12/
+     2  15X,'MAX. NUMBER OF ITERATIONS PERMITTED      (NITER)=',I12/
+     3  15X,'INDEX FOR DIAGONAL MATRIX               (NMDIAG)=',I12/
+     4  15X,'CONVERGENCE TOLERANCE ON EIGENVALUES     (EPSLB)=',E12.5/
+     5  15X,'SHIFT                                    (SHIFT)=',E12.5/
+     6  15X,'SUBSPACE DIMENSION                         (NSS)=',I12/
+     7  15X,'MAX. NUMBER OF ITERATIONS IN JACOBI       (NSWM)=',I12/
+     8  15X,'CONVERGENCE TOLERANCE IN JACOBI         (TOLJAC)=',1E12.5/)
+      IF(NVALP.LE.NEQ.AND.NSS.LE.NEQ) GO TO 20
+      WRITE(MP,2010)
+2010  FORMAT(//'---ERROR--- NVALP OR NSS GREATER THAN NEQ',/,
+     1       '---STOP EXECUTION---')
+      GO TO 30
+
+20    IF(LKGS.EQ.1) CALL ESPACE(NKG,1,TBL(1),LKGS)
+      IF(LKGD.EQ.1) CALL ESPACE(NEQ,1,TBL(2),LKGD)
+      CALL ESPACE(NKG,1,TBL(3),LMGS)
+      CALL ESPACE(NEQ,1,TBL(4),LMGD)
+      IF(LFG.EQ.1) CALL ESPACE(NEQ,1,TBL(5),LFG)
+      IF(LKE.EQ.1) CALL ESPACE(NKE,1,TBL(6),LKE)
+      IF(LFE.EQ.1) CALL ESPACE(NDLE,1,TBL(7),LFE)
+      IF(LDLE.EQ.1) CALL ESPACE(NDLE,1,TBL(8),LDLE)
+      IF(LRES.EQ.1) CALL ESPACE(NEQ,1,TBL(9),LRES)
+      IF(LDLG.EQ.1) CALL ESPACE(NEQ,1,TBL(10),LDLG)
+      CALL ESPACE(NEQ*NSS,1,TBL(11),LVEC)
+      CALL ESPACE(NSS,1,TBL(12),LLAMB)
+      CALL ESPACE(NSS,1,TBL(13),LLAM1)
+      CALL ESPACE(NSS*(NSS+1)/2,1,TBL(16),LKSS)
+      CALL ESPACE(NSS*(NSS+1)/2,1,TBL(17),LMSS)
+      CALL ESPACE(NEQ,1,TBL(18),LV1)
+      CALL ESPACE(NSS*NSS,1,TBL(19),LX)
+C      CALL EXVALP(VA(LLD),VA(LDIMP),VA(LLOCE),VA(LCORE),VA(LPRNE),
+C     1  VA(LPREE),VA(LNE),VA(LFE),VA(LKE),VA(LKE1),VA(LKGS),VA(LKGD),
+C     2  VA(LFG),VA(LCORG),VA(LDLNC),VA(LNEQ),VA(LRES),VA(LDLE),VA(LDLG),
+C     3  VA(LMGS),VA(LMGD),VA(LVEC),VA(LLAMB),VA(LLAM1),VA(LKSS),VA(LMSS)
+C     4  ,VA(LV1),VA(LX),NEQ,NSS)
+
+C........Test call EXVALP without NEQ and NSS as parameters
+      CALL EXVALP(VA(LLD),VA(LDIMP),VA(LLOCE),VA(LCORE),VA(LPRNE),
+     1  VA(LPREE),VA(LNE),VA(LFE),VA(LKE),VA(LKE1),VA(LKGS),VA(LKGD),
+     2  VA(LFG),VA(LCORG),VA(LDLNC),VA(LNEQ),VA(LRES),VA(LDLE),VA(LDLG),
+     3  VA(LMGS),VA(LMGD),VA(LVEC),VA(LLAMB),VA(LLAM1),VA(LKSS),VA(LMSS)
+     4  ,VA(LV1),VA(LX),VA(LNDSRC),VA(LTYPRSG),VA(LPRSG))
+30    RETURN
+      END
+     

@@ -1,0 +1,102 @@
+      SUBROUTINE BLCIMP
+C****************************************************************
+C     BLCIMP.FOR
+C     Ulf R. Kristiansen
+C     Kompaniet Numerisk Lyd
+C     5/6/92
+C
+C***************************************************************
+C     TO CALL BLOCK 'CIMP'
+C     TO READ IMPEDANCE CONDITIONS
+C*************************************************************** 
+
+c      INTEGER NDIM,NNT
+c      COMMON/COOR/NDIM,NNT
+
+c      INTEGER NGIMP,NGSRC,NFREQ,NSIMP,NSRC
+c      COMMON/AKUS/NGIMP,NGSRC,NFREQ,NSIMP,NSRC
+
+c      INTEGER IFL,IGIMP,IFREQ,IGSRC,IFL1,NI100NOD,NI100MOD,NI100FL
+c      REAL*8 I100RAD
+c      COMMON/IMPEL/IFL,IGIMP,IFREQ,IGSRC,IFL1,NI100NOD,NI100MOD,
+c     1		   NI100FL,I100RAD
+
+c      INTEGER M,MR,MP,M1
+c      COMMON/ES/M,MR,MP,M1
+
+c      INTEGER LCORG,LDLNC,LNEQ,LDIMP,LPRNG,LPREG,LLD,LLOCE,LCORE,
+c     1	     LNE,LPRNE,LPREE,LDLE,LKE,LFE,LKGS,LKGD,LKGI,LFG,LRES,LDLG,
+c     2	     LME,LDLE0,LDLG0,LFG0,LMGS,LMGD,LMGI,LIGS,LIGD,LIGI,LSRC,
+c     3	     LIE,LSRE,LFREQ,LPRIG,LTYPRIG,LPRSG,LNDSRC,LTYPRSG,LI100A,
+c     4	     LI100R,LI100T,LI100Q,LI100Y,LI100V,LI100KM,
+c     5	     LI100E,LI100DM1,LI100DM2
+c      COMMON /LOC/ LCORG,LDLNC,LNEQ,LDIMP,LPRNG,LPREG,LLD,LLOCE,LCORE,
+c     1	     LNE,LPRNE,LPREE,LDLE,LKE,LFE,LKGS,LKGD,LKGI,LFG,LRES,LDLG,
+c     2	     LME,LDLE0,LDLG0,LFG0,LMGS,LMGD,LMGI,LIGS,LIGD,LIGI,LSRC,
+c     3	     LIE,LSRE,LFREQ,LPRIG,LTYPRIG,LPRSG,LNDSRC,LTYPRSG,LI100A,
+c     4	     LI100R,LI100T,LI100Q,LI100Y,LI100V,LI100KM,
+c     5	     LI100E,LI100DM1,LI100DM2
+
+      include 'femak.cmn'
+
+      INTEGER SPCELM
+
+      REAL*8 VA(1)
+      COMMON VA
+
+      INTEGER NFREQ1
+
+      REAL*4 TBL(12)
+      DATA TBL/4HPRIG,4HTPRI,4HKAGA,4HKAGR,4HKAGT,4HKAGQ,4HKAGY,4HKAGV,
+     1	       4HKGKM,4HKAGE,4HDUM1,4HDUM2/
+      DATA SPCELM/0/
+
+C--------------------------------------------------------------
+C     variabelberydning i common blokkene
+C               NDIM=number of dimensions (1,2, or 3)
+C               NNT=total number of nodes
+C               M=printing index
+C               MR=logical unit input device
+C               MP=logical unit output device
+C               M1=logical number of various files used by a block
+C-----------------------------------------------------------------
+c      IF(M1.EQ.0) M1=MR
+c      READ(M1,1000)NGIMP,NFREQ1,NSIMP
+      READ(MR,1000)NGIMP,NFREQ1,NSIMP
+1000  FORMAT(3I5)
+      IF (NFREQ.EQ.0) THEN
+        NFREQ=NFREQ1
+      ELSEIF (NFREQ.NE.NFREQ1) THEN
+        WRITE(*,*)'FEIL ANTALL FREKVENSER'
+      ENDIF
+
+      WRITE(MP,2000)M,NGIMP,NFREQ,NSIMP
+2000  FORMAT(//' INPUT OF IMPEDANCE CONDITIONS (M=',I2,')'/' ',36('=')/
+     115X,' NUMBER OF IMPEDANCE GROUPS           (NGIMP) =',I2,/
+     215X,' NUMBER OF FREQUENCIES                (NFREQ) =',I2,/
+     315X,' TOTAL NUMBER OF IMPEDANCE SURFACES   (NSIMP) =',I2)
+C------------naa kalles ESPACE for aa finne ut hvor i VA arrayet det skal
+C	     legges inn verdier. LPRIG forandrer verdi
+      IF(LPRIG.EQ.1) CALL ESPACE(NGIMP*NFREQ,2,TBL(1),LPRIG)
+      IF (LTYPRIG.EQ.1) CALL ESPACE(NGIMP,0,TBL(2),LTYPRIG)
+
+      CALL EXCIMP(VA(LPRIG),VA(LTYPRIG),VA(LLOCE),VA(LCORE),VA(LNE),
+     1		  VA(LPRNE),VA(LPREE),SPCELM)
+  
+      IF (SPCELM.NE.0) THEN
+	IF (LI100A.EQ.1) CALL ESPACE(NI100MOD,2,TBL(3),LI100A)
+	IF (LI100R.EQ.1) CALL ESPACE(NI100MOD,2,TBL(4),LI100R)
+	IF (LI100T.EQ.1) CALL ESPACE(NI100MOD*NI100MOD,2,TBL(5),LI100T)
+	IF (LI100Q.EQ.1) CALL ESPACE(NI100MOD*NI100NOD,2,TBL(6),LI100Q)
+	IF (LI100Y.EQ.1) CALL ESPACE(NI100NOD*NI100NOD,2,TBL(7),LI100Y)
+	IF (LI100V.EQ.1) CALL ESPACE(NI100NOD,2,TBL(8),LI100V)
+	IF (LI100KM.EQ.1) CALL ESPACE(NI100MOD,2,TBL(9),LI100KM)
+	IF (LI100E.EQ.1) CALL ESPACE(NI100MOD*NI100MOD,2,TBL(10),LI100E)
+	IF (LI100DM1.EQ.1) CALL ESPACE(NI100NOD*NI100NOD,2,
+     1						TBL(11),LI100DM1)
+	IF (LI100DM2.EQ.1) CALL ESPACE(NI100NOD*NI100NOD,2,
+     1						TBL(12),LI100DM2)
+      ENDIF
+
+      RETURN
+      END 

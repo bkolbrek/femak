@@ -1,0 +1,232 @@
+      SUBROUTINE EXELEM(VCORG,KDLNC,VPRNG,VPREG,KLOCE,
+     1     VCORE,KNE,VPRNE,VPREE,KNEQ,KLD)
+C**********************************************************************C
+C EXELEM.FOR                                                           C
+C  2/1-1995       NTH                                                  C
+C  Tonni F. Johansen                                                   C
+C**********************************************************************C
+C  To execute	Block 'ELEM'                                             C
+C  To read element data                                                C
+C  Extended version of the subroutine described by Dhatt & Touzot,     C
+C  p.396-397. This version will be used for elements with complex coef.C
+C**********************************************************************C
+      IMPLICIT REAL*8 (A-H,O-Z)
+
+      include 'femak.cmn'
+
+      COMMON VA(1)
+
+      DIMENSION VCORG(1),KDLNC(1),VPRNG(1),VPREG(1),KLOCE(1),
+     1     VCORE(1),KNE(1),VPRNE(1),VPREE(1),KNEQ(1),KLD(1)
+
+      COMPLEX*16 VNDSRC,VPRSG
+      INTEGER KTYPRSG
+
+      DATA  I10/10/,I15/15/
+
+C----------------------------------------------------------------------
+C---------------INITIALIZE
+      NDLE=0
+      IELT=0
+      NPG=0
+      REWIND M2
+C
+      NELTR1=0
+      NELTC1=0
+
+      IF (M.GT.0) WRITE(MP,2000)
+2000  FORMAT(//' ELEMENTS CARDS'/)
+
+C--------READ AN ELEMENT CARD
+C10    READ(M1,1000) IEL,IGEN,INCR,ITPE,IGPE,IGRE,(KNE(IN),IN=1,I10)
+10    READ(MR,1000) IEL,IGEN,INCR,ITPE,IGPE,IGRE,(KNE(IN),IN=1,I10)
+1000  FORMAT(16I5)
+      IF (M.GT.0) WRITE(MP,2010) IEL,IGEN,INCR,ITPE,IGPE,IGRE,
+     1     (KNE(IN),IN=1,I10)
+2010  FORMAT('>>>>>>>>>',16I5)
+
+      IF (IEL) 80,80,20
+C---------NUMBER OF NODES AND ADDITIONNAL CARDS AS REQUIRED
+20    INEL=0
+      I1=1
+      I2=I10
+
+30    DO IN=I1,I2
+        IF (KNE(IN).EQ.0) GO TO 50
+        INEL=INEL+1
+      ENDDO
+      
+      I1=I2+1
+      I2=I1+I15
+C      READ(M1,1000)(KNE(IN),IN=I1,I2)
+      READ(MR,1000)(KNE(IN),IN=I1,I2)
+      IF (M.GT.0) WRITE(MP,2010)(KNE(IN),IN=I1,I2)
+
+      GOTO 30
+
+C-----------CHECKING
+50    IF (INEL.GT.NNEL) CALL ERREUR(51,INEL,NNEL,1)
+      IF (INCR.EQ.0) INCR=1
+      IF (ITPE.EQ.0) ITPE=NTPE
+      IF (IGPE.GT.NGPE) CALL ERREUR(53,IGPE,NGPE,1)
+      IF (IGPE.EQ.0) IGPE=1
+      IF (IGRE.GT.NGRE) CALL ERREUR(54,IGRE,NGRE,1)
+
+C----------ELEMENT GENERATION
+      IF (IGEN.EQ.0) IGEN=1
+      DO IE=1,IGEN
+        IF (IEL.GT.NELT) CALL ERREUR(55,IEL,NELT,1)
+C----------GENERATE KLOCE AND UPDATE KLD
+        CALL LOCELD(KDLNC,KNE,KNEQ,KLOCE,KLD)
+
+C----------GENERATE ELEMENT COORDINATES AND PROPERTIES
+        CALL XTRELM(IGPE,VCORG,VPRNG,VPREG,KNE,VCORE,VPRNE,VPREE)
+
+C----------CHECK ELEMENT NODE NUMBERS AND D.O.F.
+        IPG0=0
+        ICODE=1
+C        IF (ITPE.EQ.1) THEN
+C          CALL ELEMLB(VCORE,VPRNE,VPREE,VDLE,VKE,VFE)
+C        ELSEIF (ITPE.EQ.2) THEN
+C          CALL ELEMLB(VCORE,VPRNE,VPREE,VDLE,VKE,VFE)
+CC        ELSEIF (ITPE.EQ.3) THEN
+C          CALL ELEMLB(VCORE,VPRNE,VPREE,VDLE,VKE,VFE)
+C        ELSEIF(ITPE.EQ.4) THEN
+C          CALL ELEMLBC(VCORE,VPRNE,VPREE,VDLE,VKE,VA(LIE),VFE,VA(LSRE),
+C     1      VNDSRC,KTYPRSG,VPRSG)
+C        ELSEIF(ITPE.EQ.5) THEN
+C          CALL ELEMLBC(VCORE,VPRNE,VPREE,VDLE,VKE,VA(LIE),VFE,VA(LSRE),
+C     1      VNDSRC,KTYPRSG,VPRSG)
+C        ELSEIF(ITPE.EQ.11) THEN
+C          CALL ELEMLBC(VCORE,VPRNE,VPREE,VDLE,VKE,VA(LIE),VFE,VA(LSRE),
+C     1      VNDSRC,KTYPRSG,VPRSG)
+C        ELSEIF (ITPE.EQ.20) THEN
+C          CALL ELEMLBC(VCORE,VPRNE,VPREE,VDLE,VKE,VA(LIE),VFE,VA(LSRE),
+C     1      VNDSRC,KTYPRSG,VPRSG)
+C        ELSEIF(ITPE.EQ.92) THEN
+C          CALL ELEMLBC(VCORE,VPRNE,VPREE,VDLE,VKE,VA(LIE),VFE,VA(LSRE),
+C     1      VNDSRC,KTYPRSG,VPRSG)
+C        ELSEIF(ITPE.EQ.93) THEN
+C          CALL ELEMLBC(VCORE,VPRNE,VPREE,VDLE,VKE,VA(LIE),VFE,VA(LSRE),
+C     1      VNDSRC,KTYPRSG,VPRSG)
+C        ENDIF
+        CALL ELEMLB(VCORE,VPRNE,VPREE,VDLE,VA(LDLEC),VKE,VA(LKE1),
+     1        VA(LIE),VA(LIE1),VFE,VA(LSRE),VNDSRC,KTYPRSG,VPRSG)
+     
+        IF (INEL.NE.INEL0.OR.IDLE.NE.IDLE0) THEN
+          WRITE(MP,2020)IEL,INEL,INEL0,IDLE,IDLE0
+        ENDIF
+2020    FORMAT('** ELEMENT',I5,' INCONSISTENT'/5X,'INEL=',I4,' INEL0=',
+     1 I5/5X,'IDLE=',I5,' IDLE0=',I5)
+C----------UPDATE TOTAL NUMBER OF INTEGRATION POINTS
+        NPG=NPG+IPG0
+C
+C----------STORE ON ELEMENT FILE AND UPDATE NR.OF.ELEM COUNTER
+C        IF (ITPE.EQ.1) THEN
+C          CALL WRELEM(M2,KLOCE,VCORE,VPRNE,VPREE,KNE)
+C          NELTR1=NELTR1+1
+C        ELSEIF (ITPE.EQ.2) THEN
+C          CALL WRELEM(M2,KLOCE,VCORE,VPRNE,VPREE,KNE)
+C          NELTR1=NELTR1+1
+C        ELSEIF (ITPE.EQ.3) THEN
+C          CALL WRELEM(M2,KLOCE,VCORE,VPRNE,VPREE,KNE)
+C          NELTR1=NELTR1+1
+C        ELSEIF (ITPE.EQ.4) THEN
+C          CALL WRELEM(M5,KLOCE,VCORE,VPRNE,VPREE,KNE)
+C          NELTC1=NELTC1+1
+C        ELSEIF (ITPE.EQ.5) THEN
+C          CALL WRELEM(M5,KLOCE,VCORE,VPRNE,VPREE,KNE)
+C          NELTC1=NELTC1+1
+C        ELSEIF (ITPE.EQ.11) THEN
+C          CALL WRELEM(M5,KLOCE,VCORE,VPRNE,VPREE,KNE)
+C          NELTC1=NELTC1+1
+C        ELSEIF (ITPE.EQ.20) THEN
+C          CALL WRELEM(M5,KLOCE,VCORE,VPRNE,VPREE,KNE)
+C          NELTC1=NELTC1+1
+C        ELSEIF (ITPE.EQ.92) THEN
+C          CALL WRELEM(M5,KLOCE,VCORE,VPRNE,VPREE,KNE)
+C          NELTC1=NELTC1+1
+C        ELSEIF (ITPE.EQ.93) THEN
+C          CALL WRELEM(M5,KLOCE,VCORE,VPRNE,VPREE,KNE)
+C          NELTC1=NELTC1+1
+C        ELSEIF (ITPE.EQ.100) THEN
+C          CALL WRELEM(M2,KLOCE,VCORE,VPRNE,VPREE,KNE)
+C          NELTR1=NELTR1+1
+
+C        ENDIF
+
+C..........Store elementdata and update number of "real" or "complex" elements
+
+        IF (CFLAG.EQ.0) THEN
+          CALL WRELEM(M1,KLOCE,VCORE,VPRNE,VPREE,KNE)
+          NELTR1=NELTR1+1
+        ELSE
+          CALL WRELEM(M2,KLOCE,VCORE,VPRNE,VPREE,KNE)
+          NELTC1=NELTC1+1
+        ENDIF
+
+        IELT=IELT+1
+
+C----------PRINT ELEMENT CHARACTERISTICS
+        CALL PRELEM(KLOCE,VCORE,VPRNE,VPREE,KNE)
+
+C----------NEXT ELEMENT TO BE GENERATED OR READ
+        DO IN=1,INEL
+          KNE(IN)=KNE(IN)+INCR
+        ENDDO
+        IF (IDLE.GT.NDLE) NDLE=IDLE
+
+        IEL=IEL+1
+      ENDDO
+
+      GO TO 10
+
+C-----------CHECK IF TOTAL NUMBERS OF ELEMENTS IS EXCEEDED
+80    IF (IELT.NE.NELT) CALL ERREUR(57,IELT,NELT,1)
+      IF (NELTR1.NE.NELTR) THEN
+        WRITE(MP,2100)NELTR1,NELTR
+      ENDIF
+      IF (NELTC1.NE.NELTC) THEN
+        WRITE(MP,2110)NELTC1,NELTC
+      ENDIF
+2100  FORMAT(//'ERROR NELTR1.NE.NELTR'/
+     1         'NELTR1 =',I5,/'NELTR =',I5)
+2110  FORMAT(//'ERROR NELTC1.NE.NELTC'/
+     1         'NELTC1 =',I5,/'NELTC =',I5)
+
+
+
+C----------PRINT BAND HEIGHTS
+      IMA=0
+      IMO=0
+      I1=NEQ+1
+      DO I=2,I1
+        J=KLD(I)
+        IF (J.GT.IMA) IMA=J
+        IMO=IMO+J
+      ENDDO
+      C=IMO
+      C=C/NEQ
+      WRITE(MP,2030)C,IMA
+2030  FORMAT(/15X,'MEAN BAND HEIGHT=',F8.1,' MAXIMUM=',I5)
+      IF (M.GE.2) WRITE(MP,2040) (KLD(I),I=1,I1)
+2040  FORMAT(//'TABEL OF BAND HEIGHTS'/(10X,20I5))
+
+C----------TRANSFORM KLD INTO ADDRESSES OF COLOUMN TOP TERM
+      IF (NSYM.EQ.0) NKE=(NDLE*(NDLE+1))/2
+      IF (NSYM.EQ.1) NKE=NDLE*NDLE
+      KLD(1)=1
+      DO ID=2,I1
+        KLD(ID)=KLD(ID-1)+KLD(ID)
+      ENDDO
+      NKG=KLD(I1)-1
+
+      IF (M.GE.2) WRITE(MP,2050) (KLD(ID),ID=1,I1)
+2050  FORMAT(//' TABLE OF ADDRESSES OF COLOUMN TOP TERMS (LD)'/
+     1(10X,20I6))
+
+
+      RETURN
+
+      END
+
